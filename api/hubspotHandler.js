@@ -8,7 +8,7 @@ var hubspotRefreshToken
 exports.handleAuth = async (req, res) => {
   const code = req.query.code
   console.log('HS Auth: Received auth code')
-  var url = 'https://api.hubapi.com/oauth/v1/token'
+  const url = 'https://api.hubapi.com/oauth/v1/token'
   const formData = {
     grant_type: 'authorization_code',
     client_id: process.env.HS_CLIENT_ID,
@@ -16,7 +16,7 @@ exports.handleAuth = async (req, res) => {
     redirect_uri: process.env.HS_OAUTH_REDIR,
     code: code
   }
-  var config = {
+  const config = {
     url: url,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -41,14 +41,14 @@ exports.updateAccessToken = async () => {
     const expires = response.data.expires_in
     console.log('HS Access token expires in', expires)
     if (expires <= 60) {
-      var url = 'https://api.hubapi.com/oauth/v1/token'
+      const url = 'https://api.hubapi.com/oauth/v1/token'
       const formData = {
         grant_type: 'refresh_token',
         client_id: process.env.HS_CLIENT_ID,
         client_secret: process.env.HS_CLIENT_SECRET,
         refresh_token: hubspotRefreshToken
       }
-      var config = {
+      const config = {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
